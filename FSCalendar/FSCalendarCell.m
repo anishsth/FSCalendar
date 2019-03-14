@@ -390,6 +390,8 @@ OFFSET_PROPERTY(preferredEventOffset, PreferredEventOffset, _appearance.eventOff
         for (int i = 0; i < 3; i++) {
             CALayer *layer = [CALayer layer];
             layer.backgroundColor = [UIColor clearColor].CGColor;
+            layer.borderWidth = 0.5;
+            layer.borderColor = [UIColor blackColor].CGColor;
             [self.contentView.layer addSublayer:layer];
             [self.eventLayers addPointer:(__bridge void * _Nullable)(layer)];
         }
