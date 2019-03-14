@@ -390,7 +390,7 @@ OFFSET_PROPERTY(preferredEventOffset, PreferredEventOffset, _appearance.eventOff
         for (int i = 0; i < 3; i++) {
             CALayer *layer = [CALayer layer];
             layer.backgroundColor = [UIColor clearColor].CGColor;
-            layer.borderWidth = 0.5;
+            layer.borderWidth = 1.0;
             layer.borderColor = [UIColor blackColor].CGColor;
             [self.contentView.layer addSublayer:layer];
             [self.eventLayers addPointer:(__bridge void * _Nullable)(layer)];
@@ -403,8 +403,8 @@ OFFSET_PROPERTY(preferredEventOffset, PreferredEventOffset, _appearance.eventOff
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    CGFloat diameter = MIN(MIN(self.fs_width, self.fs_height),FSCalendarMaximumEventDotDiameter);
-    self.contentView.fs_height = self.fs_height;
+    CGFloat diameter = FSCalendarMaximumEventDotDiameter;
+    self.contentView.fs_height = FSCalendarMaximumEventDotDiameter + 4;
     self.contentView.fs_width = (self.numberOfEvents*2-1)*diameter;
     self.contentView.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
 }
@@ -414,12 +414,12 @@ OFFSET_PROPERTY(preferredEventOffset, PreferredEventOffset, _appearance.eventOff
     [super layoutSublayersOfLayer:layer];
     if (layer == self.layer) {
         
-        CGFloat diameter = MIN(MIN(self.fs_width, self.fs_height),FSCalendarMaximumEventDotDiameter);
+        CGFloat diameter = FSCalendarMaximumEventDotDiameter;
         for (int i = 0; i < self.eventLayers.count; i++) {
             CALayer *eventLayer = [self.eventLayers pointerAtIndex:i];
             eventLayer.hidden = i >= self.numberOfEvents;
             if (!eventLayer.hidden) {
-                eventLayer.frame = CGRectMake(2*i*diameter, (self.fs_height-diameter)*0.5, diameter, diameter);
+                eventLayer.frame = CGRectMake(2*i*diameter, 4, diameter, diameter);
                 if (eventLayer.cornerRadius != diameter/2) {
                     eventLayer.cornerRadius = diameter/2;
                 }
